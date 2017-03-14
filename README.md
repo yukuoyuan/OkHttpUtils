@@ -1,18 +1,26 @@
 # OkHttpUtils
 这是一个自己封装的okhttputils工具类
 ##引用方式
+
+-------
+```
 <dependency>
   <groupId>cn.yuan.yu</groupId>
   <artifactId>library</artifactId>
   <version>1.0.1</version>
   <type>pom</type>
 </dependency>
+```
+
+
+----------
 ###graldew引用方式
+```
 
 compile 'cn.yuan.yu:library:1.0.1'
-
+```
 ##初始化
-
+```
 public class MyApplication extends Application {
     private static   Handler mainHandler;
     private static Context instance;
@@ -33,8 +41,10 @@ public class MyApplication extends Application {
         OkHttpUtilsConfig.getInstance().init(false, "resultcode", "100", "msg", mainHandler,this);
     }
 }
+```
 ###代码
 ###内部已经处理了json的解析,只需要传递一个类型就可以,看回调监听的类型
+```
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", username);
         jsonObject.put("password", pwd);
@@ -54,3 +64,4 @@ public class MyApplication extends Application {
                 iForgetPwdView.showT(responseresult);
             }
         });
+        ```
