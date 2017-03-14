@@ -31,14 +31,7 @@ public class OkHttpUtil {
     public static final MediaType mJSON = MediaType.parse("application/json; charset=utf-8");
     //请求编码格式
     private static final String CHARSET_NAME = "UTF-8";
-    //是否提交json数据//否的话使用表单提交的形式
-    private static boolean isPostJson = false;
-    //返回编码key
-    private static String ResultCodeKey = "";
-    //返回编码正确值
-    private static String ResultCodeValue = "";
-    //返回错误信息值
-    private static String ResultMsgValue = "";
+
 
     static {
         mOkHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
@@ -97,7 +90,7 @@ public class OkHttpUtil {
         //设置请求的url
         if (method == RequestPacket.POST) {
             //如果是post请求
-            if (isPostJson) {
+            if (OkHttpUtilsConfig.isPostJson()) {
                 RequestBody body = RequestBody.create(mJSON, new Gson().toJson(requestPacket.arguments));
                 request = new Request.Builder()
                         .url(requestPacket.url)
@@ -130,10 +123,10 @@ public class OkHttpUtil {
             public void onResponse(final Response response) throws IOException {
                 final String result = response.body().string();
                 JsonObject re = new Gson().toJsonTree(result).getAsJsonObject();
-                if (re.get(ResultCodeKey).equals(ResultCodeValue)) {
+                if (re.get(OkHttpUtilsConfig.getResultCodeKey()).equals(OkHttpUtilsConfig.getResultCodeValue())) {
                     SendSuccess(result, listener);
                 } else {
-                    String responseresult = re.get(ResultMsgValue).getAsString();
+                    String responseresult = re.get(OkHttpUtilsConfig.getResultMsgKey()).getAsString();
                     sendFaliure(responseresult, listener, null);
                 }
             }
@@ -255,40 +248,5 @@ public class OkHttpUtil {
         });
     }
 
-    /**
-     * 设置是否使用提交json的形式
-     * 不设置的话则使用提交表单的形式提交
-     *
-     * @param postJson 是否
-     */
-    public void setPostJson(boolean postJson) {
-        isPostJson = postJson;
-    }
 
-    /**
-     * 设置返回的编码的key
-     *
-     * @param resultCodeKey key
-     */
-    public static void setResultCodeKey(String resultCodeKey) {
-        ResultCodeKey = resultCodeKey;
-    }
-
-    /**
-     * 设置返回正确的正确的value
-     *
-     * @param resultCodeValue
-     */
-    public static void setResultCodeValue(String resultCodeValue) {
-        ResultCodeValue = resultCodeValue;
-    }
-
-    /**
-     * 设置返回信息的字段key
-     *
-     * @param resultMsgValue key
-     */
-    public static void setResultMsgValue(String resultMsgValue) {
-        ResultMsgValue = resultMsgValue;
-    }
 }
