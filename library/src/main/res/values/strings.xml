@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Library</string>
+    <string name="net_error">网络错误</string>
+    <string name="net_null">网络异常</string>
 </resources>

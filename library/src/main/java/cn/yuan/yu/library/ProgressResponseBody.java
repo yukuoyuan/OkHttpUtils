@@ -5,6 +5,7 @@ import com.squareup.okhttp.ResponseBody;
 
 import java.io.IOException;
 
+import cn.yuan.yu.library.listener.DonwloadResponseListener;
 import okio.Buffer;
 import okio.BufferedSource;
 import okio.ForwardingSource;

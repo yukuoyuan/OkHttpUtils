@@ -1,4 +1,4 @@
-package cn.yuan.yu.library;
+package cn.yuan.yu.library.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -17,8 +17,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import cn.yuan.yu.library.OkHttpUtilsConfig;
+import cn.yuan.yu.library.ProgressResponseBody;
+import cn.yuan.yu.library.R;
+import cn.yuan.yu.library.bean.RequestPacket;
+import cn.yuan.yu.library.listener.DonwloadResponseListener;
+import cn.yuan.yu.library.listener.ResponseListener;
 
 
 /**
@@ -90,7 +99,7 @@ public class OkHttpUtil {
         //设置请求的url
         if (method == RequestPacket.POST) {
             //如果是post请求
-            if (OkHttpUtilsConfig.isPostJson()) {
+            if (OkHttpUtilsConfig.getInstance().isPostJson()) {
                 RequestBody body = RequestBody.create(mJSON, new Gson().toJson(requestPacket.arguments));
                 request = new Request.Builder()
                         .url(requestPacket.url)
@@ -113,6 +122,7 @@ public class OkHttpUtil {
             //如果是get请求
             request = builder.url(url).build();
         }
+        L.i("请求路径和参数", request.toString() + new Gson().toJson(requestPacket.arguments));
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(final Request request, final IOException e) {
@@ -123,10 +133,10 @@ public class OkHttpUtil {
             public void onResponse(final Response response) throws IOException {
                 final String result = response.body().string();
                 JsonObject re = new Gson().toJsonTree(result).getAsJsonObject();
-                if (re.get(OkHttpUtilsConfig.getResultCodeKey()).equals(OkHttpUtilsConfig.getResultCodeValue())) {
+                if (re.get(OkHttpUtilsConfig.getInstance().getResultCodeKey()).equals(OkHttpUtilsConfig.getInstance().getResultCodeValue())) {
                     SendSuccess(result, listener);
                 } else {
-                    String responseresult = re.get(OkHttpUtilsConfig.getResultMsgKey()).getAsString();
+                    String responseresult = re.get(OkHttpUtilsConfig.getInstance().getResultMsgKey()).getAsString();
                     sendFaliure(responseresult, listener, null);
                 }
             }
@@ -140,23 +150,23 @@ public class OkHttpUtil {
      * @param listener 回调监听
      */
     private static void SendSuccess(final String result, final ResponseListener listener) {
-//        XiaoYuApplication.getMainHandler().post(new Runnable() {
-//            @Override
-//            public void run() {
-        /**
-         * 获取要转换的json类型
-         */
-        Type genType = listener.getClass().getGenericSuperclass();
-        Class clzss = (Class) ((ParameterizedType) genType).getActualTypeArguments()[0];
-        try {
-            // L.i("响应", result);
-            listener.onSuccess(new Gson().fromJson(result, clzss));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        OkHttpUtilsConfig.getInstance().getMainHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                /**
+                 * 获取要转换的json类型
+                 */
+                Type genType = listener.getClass().getGenericSuperclass();
+                Class clzss = (Class) ((ParameterizedType) genType).getActualTypeArguments()[0];
+                try {
+                    L.i("返回的结果", result);
+                    listener.onSuccess(new Gson().fromJson(result, clzss));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
-//        });
-//}
 
     /**
      * 发送失败的消息
@@ -166,19 +176,19 @@ public class OkHttpUtil {
      * @param e              异常
      */
     private static void sendFaliure(final String responseresult, final ResponseListener listener, final IOException e) {
-//        XiaoYuApplication.getMainHandler().post(new Runnable() {
-//            @Override
-//            public void run() {
-//                listener.onFailure(responseresult);
-//                if (e instanceof SocketTimeoutException) {
-//                    T.showLong(XiaoYuApplication.getInstance(), R.string.net_error);
-//                    return;
-//                } else if (e instanceof ConnectException) {
-//                    T.showLong(XiaoYuApplication.getInstance(), R.string.net_null);
-//                    return;
-//                }
-//            }
-//        });
+        OkHttpUtilsConfig.getInstance().getMainHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                listener.onFailure(responseresult);
+                if (e instanceof SocketTimeoutException) {
+                    T.showLong(OkHttpUtilsConfig.getInstance().getContext(), R.string.net_error);
+                    return;
+                } else if (e instanceof ConnectException) {
+                    T.showLong(OkHttpUtilsConfig.getInstance().getContext(), R.string.net_null);
+                    return;
+                }
+            }
+        });
     }
 
     /**
@@ -218,12 +228,12 @@ public class OkHttpUtil {
                 /**
                  * 失败回调监听
                  */
-//                XiaoYuApplication.getMainHandler().post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        donwloadResponseListener.onfailure();
-//                    }
-//                });
+                OkHttpUtilsConfig.getInstance().getMainHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        donwloadResponseListener.onfailure();
+                    }
+                });
             }
 
             @Override

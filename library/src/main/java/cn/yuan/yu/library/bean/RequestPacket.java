@@ -1,4 +1,4 @@
-package cn.yuan.yu.library;
+package cn.yuan.yu.library.bean;
 
 import java.io.Serializable;
 import java.util.HashMap;

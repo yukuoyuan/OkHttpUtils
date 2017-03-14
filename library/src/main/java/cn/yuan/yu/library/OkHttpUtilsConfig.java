@@ -1,5 +1,8 @@
 package cn.yuan.yu.library;
 
+import android.content.Context;
+import android.os.Handler;
+
 /**
  * Created by yukuoyuan on 2017/3/14.
  * 这是一个okhttp的配置类
@@ -7,13 +10,19 @@ package cn.yuan.yu.library;
 
 public class OkHttpUtilsConfig {
     //返回编码key
-    private static String ResultCodeKey = "";
+    private String ResultCodeKey = "";
     //返回编码正确值
-    private static String ResultCodeValue = "";
+    private String ResultCodeValue = "";
     //返回错误信息值
-    private static String ResultMsgKey = "";
+    private String ResultMsgKey = "";
     //是否提交json数据//否的话使用表单提交的形式
-    private static boolean isPostJson = false;
+    private boolean isPostJson = false;
+    //用于同步线程
+    private Handler mainHandler;
+    //是否展示和日志
+    private boolean isShowLog;
+    //上下文
+    private Context context;
 
     /**
      * 设置是否使用提交json的形式
@@ -30,7 +39,7 @@ public class OkHttpUtilsConfig {
      *
      * @param resultCodeKey key
      */
-    public static void setResultCodeKey(String resultCodeKey) {
+    public void setResultCodeKey(String resultCodeKey) {
         ResultCodeKey = resultCodeKey;
     }
 
@@ -39,7 +48,7 @@ public class OkHttpUtilsConfig {
      *
      * @param resultCodeValue
      */
-    public static void setResultCodeValue(String resultCodeValue) {
+    public void setResultCodeValue(String resultCodeValue) {
         ResultCodeValue = resultCodeValue;
     }
 
@@ -48,27 +57,78 @@ public class OkHttpUtilsConfig {
      *
      * @param resultMsgKey key
      */
-    public static void setResultMsgKey(String resultMsgKey) {
+    public void setResultMsgKey(String resultMsgKey) {
         ResultMsgKey = resultMsgKey;
     }
 
-    public static boolean isPostJson() {
+    public boolean isPostJson() {
         return isPostJson;
     }
 
 
-    public static String getResultCodeKey() {
+    public String getResultCodeKey() {
         return ResultCodeKey;
     }
 
 
-    public static String getResultCodeValue() {
+    public String getResultCodeValue() {
         return ResultCodeValue;
     }
 
 
-    public static String getResultMsgKey() {
+    public String getResultMsgKey() {
         return ResultMsgKey;
     }
 
+    public Handler getMainHandler() {
+        return mainHandler;
+    }
+
+    public void setMainHandler(Handler mainhandler) {
+        this.mainHandler = mainhandler;
+    }
+
+    public boolean isShowLog() {
+        return isShowLog;
+    }
+
+    public void setShowLog(boolean showLog) {
+        isShowLog = showLog;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    private static OkHttpUtilsConfig sInstance;
+
+    private OkHttpUtilsConfig() {
+    }
+
+    public static OkHttpUtilsConfig getInstance() {
+        if (sInstance == null) {
+            synchronized (OkHttpUtilsConfig.class) {
+                if (sInstance == null) {
+                    sInstance = new OkHttpUtilsConfig();
+                }
+            }
+        }
+        return sInstance;
+    }
+
+    /**
+     * 这是一个初始化okhttputils的方法
+     */
+    public void init(boolean postJson, String resultCodeKey, String resultCodeValue, String resultMsgKey, Handler mainHandler, Context context) {
+        setPostJson(postJson);
+        setResultCodeKey(resultCodeKey);
+        setResultCodeValue(resultCodeValue);
+        setResultMsgKey(resultMsgKey);
+        setMainHandler(mainHandler);
+        setContext(context);
+    }
 }
