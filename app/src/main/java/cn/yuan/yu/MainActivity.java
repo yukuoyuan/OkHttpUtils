@@ -2,10 +2,10 @@ package cn.yuan.yu;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
-import cn.yuan.yu.library.utils.OkHttpUtil;
-import cn.yuan.yu.library.bean.RequestPacket;
-import cn.yuan.yu.library.listener.ResponseListener;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -14,16 +14,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        OkHttpUtil.Request(RequestPacket.POST, new RequestPacket(), new ResponseListener() {
-            @Override
-            public void onSuccess(Object o) {
+        ButterKnife.bind(this);
 
-            }
+    }
 
-            @Override
-            public void onFailure(String responseresult) {
+    @OnClick({R.id.bt_get, R.id.bt_post, R.id.bt_json, R.id.bt_download})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_get:
 
-            }
-        });
+                break;
+            case R.id.bt_post:
+                break;
+            case R.id.bt_json:
+                break;
+            case R.id.bt_download:
+                break;
+        }
     }
 }
