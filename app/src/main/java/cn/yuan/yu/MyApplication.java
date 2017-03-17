@@ -20,6 +20,12 @@ public class MyApplication extends Application {
         mainHandler = new Handler();
         /**
          * 初始化okhttputils
+         * 第一个参数是是否提交json数据的形式还是表单的形式
+         * 第二份参数是请求返回的标识code
+         * 第三个参数是请求返回的正确的code值
+         * 第四个参数是请求返回的提示信息key
+         * 第五个参数是为了同步线程的问题
+         * 第六个参数是为了弹出提示信息的上下文
          */
         OkHttpUtilsConfig.getInstance().init(false, "resultcode", "100", "msg", mainHandler,this);
     }
