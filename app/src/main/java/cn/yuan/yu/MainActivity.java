@@ -15,14 +15,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
     }
 
     @OnClick({R.id.bt_get, R.id.bt_post, R.id.bt_json, R.id.bt_download})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_get:
-
                 break;
             case R.id.bt_post:
                 break;

@@ -61,6 +61,17 @@ public class OkHttpUtilsConfig {
         ResultMsgKey = resultMsgKey;
     }
 
+    /**
+     * 这是一个初始化okhttputils的方法
+     */
+    public void init(boolean postJson, String resultCodeKey, String resultCodeValue, String resultMsgKey, Handler mainHandler, Context context) {
+        setPostJson(postJson);
+        setResultCodeKey(resultCodeKey);
+        setResultCodeValue(resultCodeValue);
+        setResultMsgKey(resultMsgKey);
+        setMainHandler(mainHandler);
+        setContext(context);
+    }
     public boolean isPostJson() {
         return isPostJson;
     }
@@ -120,15 +131,4 @@ public class OkHttpUtilsConfig {
         return sInstance;
     }
 
-    /**
-     * 这是一个初始化okhttputils的方法
-     */
-    public void init(boolean postJson, String resultCodeKey, String resultCodeValue, String resultMsgKey, Handler mainHandler, Context context) {
-        setPostJson(postJson);
-        setResultCodeKey(resultCodeKey);
-        setResultCodeValue(resultCodeValue);
-        setResultMsgKey(resultMsgKey);
-        setMainHandler(mainHandler);
-        setContext(context);
-    }
 }
