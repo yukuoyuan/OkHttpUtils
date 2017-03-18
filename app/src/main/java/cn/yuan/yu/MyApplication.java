@@ -29,4 +29,20 @@ public class MyApplication extends Application {
          */
         OkHttpUtilsConfig.getInstance().init(false, "resultcode", "100", "msg", mainHandler,this);
     }
+
+    public static Handler getMainHandler() {
+        return mainHandler;
+    }
+
+    public static void setMainHandler(Handler mainHandler) {
+        MyApplication.mainHandler = mainHandler;
+    }
+
+    public static Context getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(Context instance) {
+        MyApplication.instance = instance;
+    }
 }
