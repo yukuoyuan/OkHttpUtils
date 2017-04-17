@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //                        iForgetPwdView.showT(responseresult);
 //                    }
 //                });
+
 //                TODO: 记得更改APplication中文件配置
                 break;
             case R.id.bt_post:
