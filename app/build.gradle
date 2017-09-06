@@ -24,5 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     /*注解*/
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile project(':library')
+    compile 'cn.yuan.yu:library:1.0.2'
+//    compile project(':library')
 }

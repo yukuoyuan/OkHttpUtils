@@ -9,9 +9,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.yuan.yu.library.bean.RequestPacket;
 import cn.yuan.yu.library.listener.DonwloadResponseListener;
-import cn.yuan.yu.library.listener.ResponseListener;
 import cn.yuan.yu.library.utils.OkHttpUtil;
 import cn.yuan.yu.library.utils.T;
 
@@ -35,19 +33,19 @@ public class MainActivity extends AppCompatActivity {
                 /**
                  * 我没有接口自己玩吧
                  */
-                RequestPacket requestPacket = new RequestPacket();
-                requestPacket.url = "http://superman.ihuanyan.cn/api/login";
-                requestPacket.addArgument("phone", "13721803180");
-                requestPacket.addArgument("password", "123");
-                OkHttpUtil.Request(RequestPacket.POST, requestPacket, new ResponseListener<RegistGetVCodeBean>() {
-                    @Override
-                    public void onSuccess(RegistGetVCodeBean registGetVCodeBean) {
-                    }
-
-                    @Override
-                    public void onFailure(String responseresult) {
-                    }
-                });
+//                RequestPacket requestPacket = new RequestPacket();
+//                requestPacket.url = "http://cn.yuan.yu/api/login";
+//                requestPacket.addArgument("phone", "13721803180");
+//                requestPacket.addArgument("password", "123");
+//                OkHttpUtil.Request(RequestPacket.POST, requestPacket, new ResponseListener<RegistGetVCodeBean>() {
+//                    @Override
+//                    public void onSuccess(RegistGetVCodeBean registGetVCodeBean) {
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String responseresult) {
+//                    }
+//                });
 
 //                TODO: 记得更改APplication中文件配置
                 break;
