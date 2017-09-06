@@ -11,8 +11,9 @@ import cn.yuan.yu.library.OkHttpUtilsConfig;
  */
 
 public class MyApplication extends Application {
-    private static   Handler mainHandler;
+    private static Handler mainHandler;
     private static Context instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -27,7 +28,8 @@ public class MyApplication extends Application {
          * 第五个参数是为了同步线程的问题
          * 第六个参数是为了弹出提示信息的上下文
          */
-        OkHttpUtilsConfig.getInstance().init(false, "resultcode", "100", "msg", mainHandler,this);
+        OkHttpUtilsConfig.getInstance().init(true, "code", "200", "message", mainHandler, this);
+        OkHttpUtilsConfig.getInstance().setShowLog(true);
     }
 
     public static Handler getMainHandler() {

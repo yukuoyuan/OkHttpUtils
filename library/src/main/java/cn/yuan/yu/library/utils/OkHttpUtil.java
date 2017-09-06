@@ -2,6 +2,7 @@ package cn.yuan.yu.library.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Interceptor;
@@ -132,7 +133,8 @@ public class OkHttpUtil {
             @Override
             public void onResponse(final Response response) throws IOException {
                 final String result = response.body().string();
-                JsonObject re = new Gson().toJsonTree(result).getAsJsonObject();
+                JsonObject re = new JsonParser().parse(result).getAsJsonObject();
+                L.i("返回的结果", result);
                 if (re.get(OkHttpUtilsConfig.getInstance().getResultCodeKey()).equals(OkHttpUtilsConfig.getInstance().getResultCodeValue())) {
                     SendSuccess(result, listener);
                 } else {
@@ -159,7 +161,6 @@ public class OkHttpUtil {
                 Type genType = listener.getClass().getGenericSuperclass();
                 Class clzss = (Class) ((ParameterizedType) genType).getActualTypeArguments()[0];
                 try {
-                    L.i("返回的结果", result);
                     listener.onSuccess(new Gson().fromJson(result, clzss));
                 } catch (Exception e) {
                     e.printStackTrace();
