@@ -7,7 +7,7 @@
 <dependency>
   <groupId>cn.yuan.yu</groupId>
   <artifactId>library</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -17,10 +17,13 @@
 ###graldew引用方式
 ```
 
-compile 'cn.yuan.yu:library:1.0.1'
+compile 'cn.yuan.yu:library:1.0.2'
 ```
 ##初始化
 ```
+/**
+*以下是表单的示例
+*/
 public class MyApplication extends Application {
     private static   Handler mainHandler;
     private static Context instance;
@@ -44,6 +47,7 @@ public class MyApplication extends Application {
 ```
 ###代码
 ###内部已经处理了json的解析,只需要传递一个类型就可以,看回调监听的类型
+
 ```
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", username);
@@ -53,7 +57,7 @@ public class MyApplication extends Application {
         requestPacket.url = ConstantUrl.getBaseUrl();
         requestPacket.addArgument("data", jsonObject.toJSONString());
         requestPacket.addArgument("query", "login");
-        OkHttpUtil.Request(RequestPacket.POST,new ResponseListener<RegistGetVCodeBean>() {
+        OkHttpUtil.Request(RequestPacket.POST,requestPacket,new ResponseListener<RegistGetVCodeBean>() {
             @Override
             public void onSuccess(RegistGetVCodeBean registGetVCodeBean) {
                 iForgetPwdView.showT("发送成功");
