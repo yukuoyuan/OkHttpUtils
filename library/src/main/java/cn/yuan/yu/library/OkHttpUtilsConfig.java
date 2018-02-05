@@ -9,12 +9,6 @@ import android.os.Handler;
  */
 
 public class OkHttpUtilsConfig {
-    //返回编码key
-    private String ResultCodeKey = "";
-    //返回编码正确值
-    private String ResultCodeValue = "";
-    //返回错误信息值
-    private String ResultMsgKey = "";
     //是否提交json数据//否的话使用表单提交的形式
     private boolean isPostJson = false;
     //用于同步线程
@@ -34,41 +28,13 @@ public class OkHttpUtilsConfig {
         isPostJson = postJson;
     }
 
-    /**
-     * 设置返回的编码的key
-     *
-     * @param resultCodeKey key
-     */
-    public void setResultCodeKey(String resultCodeKey) {
-        ResultCodeKey = resultCodeKey;
-    }
-
-    /**
-     * 设置返回正确的正确的value
-     *
-     * @param resultCodeValue
-     */
-    public void setResultCodeValue(String resultCodeValue) {
-        ResultCodeValue = resultCodeValue;
-    }
-
-    /**
-     * 设置返回信息的字段key
-     *
-     * @param resultMsgKey key
-     */
-    public void setResultMsgKey(String resultMsgKey) {
-        ResultMsgKey = resultMsgKey;
-    }
 
     /**
      * 这是一个初始化okhttputils的方法
      */
-    public void init(boolean postJson, String resultCodeKey, String resultCodeValue, String resultMsgKey, Handler mainHandler, Context context) {
+    public void init(boolean postJson, Handler mainHandler, Context context) {
         setPostJson(postJson);
-        setResultCodeKey(resultCodeKey);
-        setResultCodeValue(resultCodeValue);
-        setResultMsgKey(resultMsgKey);
+
         setMainHandler(mainHandler);
         setContext(context);
     }
@@ -76,20 +42,6 @@ public class OkHttpUtilsConfig {
         return isPostJson;
     }
 
-
-    public String getResultCodeKey() {
-        return ResultCodeKey;
-    }
-
-
-    public String getResultCodeValue() {
-        return ResultCodeValue;
-    }
-
-
-    public String getResultMsgKey() {
-        return ResultMsgKey;
-    }
 
     public Handler getMainHandler() {
         return mainHandler;

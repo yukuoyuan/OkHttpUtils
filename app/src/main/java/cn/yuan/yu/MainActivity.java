@@ -32,24 +32,27 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_get:
+                //                TODO: 记得更改APplication中文件配置
+
                 /**
                  * 我没有接口自己玩吧
                  */
                 RequestPacket requestPacket = new RequestPacket();
-                requestPacket.url = "http://cn.yuan.yu/api/login";
-                requestPacket.addArgument("phone", "13721803180");
-                requestPacket.addArgument("password", "123");
-                OkHttpUtil.Request(RequestPacket.POST, requestPacket, new ResponseListener<RegistGetVCodeBean>() {
+                requestPacket.url = "http://v.juhe.cn/toutiao/index";
+                requestPacket.addArgument("key", "b3ce40265b07125c667d59bc574e3d70");
+                requestPacket.addArgument("type", "top");
+                OkHttpUtil.Request(RequestPacket.GET, requestPacket, new ResponseListener() {
                     @Override
-                    public void onSuccess(RegistGetVCodeBean registGetVCodeBean) {
+                    public void onSuccess(String result) {
+                        tvTestShow.setText(result);
                     }
 
                     @Override
                     public void onFailure(String responseresult) {
+                        T.showShort(MainActivity.this, responseresult);
                     }
                 });
 
-//                TODO: 记得更改APplication中文件配置
                 break;
             case R.id.bt_post:
                 /**
@@ -88,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+                break;
+            default:
                 break;
         }
     }

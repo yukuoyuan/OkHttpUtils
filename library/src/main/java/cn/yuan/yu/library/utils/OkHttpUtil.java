@@ -1,8 +1,6 @@
 package cn.yuan.yu.library.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Interceptor;
@@ -16,8 +14,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.Set;
@@ -133,13 +129,11 @@ public class OkHttpUtil {
             @Override
             public void onResponse(final Response response) throws IOException {
                 final String result = response.body().string();
-                JsonObject re = new JsonParser().parse(result).getAsJsonObject();
                 L.i("返回的结果", result);
-                if (re.get(OkHttpUtilsConfig.getInstance().getResultCodeKey()).equals(OkHttpUtilsConfig.getInstance().getResultCodeValue())) {
+                if (response.code() == 200) {
                     SendSuccess(result, listener);
                 } else {
-                    String responseresult = re.get(OkHttpUtilsConfig.getInstance().getResultMsgKey()).getAsString();
-                    sendFaliure(responseresult, listener, null);
+                    sendFaliure(result, listener, null);
                 }
             }
         });
@@ -155,16 +149,8 @@ public class OkHttpUtil {
         OkHttpUtilsConfig.getInstance().getMainHandler().post(new Runnable() {
             @Override
             public void run() {
-                /**
-                 * 获取要转换的json类型
-                 */
-                Type genType = listener.getClass().getGenericSuperclass();
-                Class clzss = (Class) ((ParameterizedType) genType).getActualTypeArguments()[0];
-                try {
-                    listener.onSuccess(new Gson().fromJson(result, clzss));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
+                    listener.onSuccess(result);
             }
         });
     }
