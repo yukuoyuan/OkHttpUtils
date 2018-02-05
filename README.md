@@ -11,7 +11,7 @@
 <dependency>
   <groupId>cn.yuan.yu</groupId>
   <artifactId>library</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <type>pom</type>
 </dependency>
 ```
@@ -21,7 +21,7 @@
 ###graldew引用方式
 ```
 
-compile 'cn.yuan.yu:library:1.0.2'
+compile 'cn.yuan.yu:library:1.0.3'
 ```
 ##初始化
 
@@ -38,15 +38,13 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         mainHandler = new Handler();
-        /**
-         * 初始化okhttputils
-         * 第一个参数是是否提交json数据的形式还是表单的形式
-         * 第二份参数是请求返回的标识code
-         * 第三个参数是请求返回的正确的code值
-         * 第四个参数是请求返回的提示信息key
-         * 第五个参数是为了同步线程的问题
-         * 第六个参数是为了弹出提示信息的上下文
-         */
+         /**
+                * 初始化okhttputils
+                * 第一个参数是是否提交json数据的形式还是表单的形式
+                * 第二个参数是为了同步线程的问题
+                * 第三个参数是为了弹出提示信息的上下文
+                */
+               OkHttpUtilsConfig.getInstance().init(false, mainHandler, this);
         OkHttpUtilsConfig.getInstance().init(false, "resultcode", "100", "msg", mainHandler,this);
     }
 }
@@ -54,28 +52,21 @@ public class MyApplication extends Application {
 
 
 ```
-/**
-*代码内部已经处理了json的解析,只需要传递一个类型就可以,看回调监听的类型
-*/
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", username);
-        jsonObject.put("password", pwd);
-        L.d("登录", jsonObject.toJSONString());
-        RequestPacket requestPacket = new RequestPacket();
-        requestPacket.url = ConstantUrl.getBaseUrl();
-        requestPacket.addArgument("data", jsonObject.toJSONString());
-        requestPacket.addArgument("query", "login");
-        OkHttpUtil.Request(RequestPacket.POST,requestPacket,new ResponseListener<RegistGetVCodeBean>() {
-            @Override
-            public void onSuccess(RegistGetVCodeBean registGetVCodeBean) {
-                iForgetPwdView.showT("发送成功");
-            }
+ RequestPacket requestPacket = new RequestPacket();
+                requestPacket.url = "http://v.juhe.cn/toutiao/index";
+                requestPacket.addArgument("key", "b3ce40265b07125c667d59bc574e3d70");
+                requestPacket.addArgument("type", "top");
+                OkHttpUtil.Request(RequestPacket.GET, requestPacket, new ResponseListener() {
+                    @Override
+                    public void onSuccess(String result) {
+                        tvTestShow.setText(result);
+                    }
 
-            @Override
-            public void onFailure(String responseresult) {
-                iForgetPwdView.showT(responseresult);
-            }
-        });
+                    @Override
+                    public void onFailure(String responseresult) {
+                        T.showShort(MainActivity.this, responseresult);
+                    }
+                });
        
 ```
 
@@ -106,16 +97,13 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         mainHandler = new Handler();
-        /**
-         * 初始化okhttputils
-         * 第一个参数是是否提交json数据的形式还是表单的形式
-         * 第二份参数是请求返回的标识code
-         * 第三个参数是请求返回的正确的code值
-         * 第四个参数是请求返回的提示信息key
-         * 第五个参数是为了同步线程的问题
-         * 第六个参数是为了弹出提示信息的上下文
-         */
-        OkHttpUtilsConfig.getInstance().init(true, "code", "200", "message", mainHandler, this);
+         /**
+                      * 初始化okhttputils
+                      * 第一个参数是是否提交json数据的形式还是表单的形式
+                      * 第二个参数是为了同步线程的问题
+                      * 第三个参数是为了弹出提示信息的上下文
+                      */
+                     OkHttpUtilsConfig.getInstance().init(false, mainHandler, this);
         OkHttpUtilsConfig.getInstance().setShowLog(true);
     }
 
@@ -143,16 +131,18 @@ public class MyApplication extends Application {
 *post请求
 */
 RequestPacket requestPacket = new RequestPacket();
-                requestPacket.url = "http://cn.yuan.yu/api/login";
-                requestPacket.addArgument("phone", "13721803180");
-                requestPacket.addArgument("password", "123");
-                OkHttpUtil.Request(RequestPacket.POST, requestPacket, new ResponseListener<RegistGetVCodeBean>() {
+                requestPacket.url = "http://v.juhe.cn/toutiao/index";
+                requestPacket.addArgument("key", "b3ce40265b07125c667d59bc574e3d70");
+                requestPacket.addArgument("type", "top");
+                OkHttpUtil.Request(RequestPacket.POST, requestPacket, new ResponseListener() {
                     @Override
-                    public void onSuccess(RegistGetVCodeBean registGetVCodeBean) {
+                    public void onSuccess(String result) {
+                        tvTestShow.setText(result);
                     }
 
                     @Override
                     public void onFailure(String responseresult) {
+                        T.showShort(MainActivity.this, responseresult);
                     }
                 });
 ```

@@ -33,10 +33,6 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.bt_get:
                 //                TODO: 记得更改APplication中文件配置
-
-                /**
-                 * 我没有接口自己玩吧
-                 */
                 RequestPacket requestPacket = new RequestPacket();
                 requestPacket.url = "http://v.juhe.cn/toutiao/index";
                 requestPacket.addArgument("key", "b3ce40265b07125c667d59bc574e3d70");

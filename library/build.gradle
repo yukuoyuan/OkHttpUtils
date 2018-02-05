@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 //最后生成是compile 'com.soubw:jcontactlib:0.0.1' 就是group + ：+module名字 + ：+version
 // This is the library version used when deploying the artifact
-version = "1.0.2"
+version = "1.0.3"
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
